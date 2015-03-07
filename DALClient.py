@@ -68,9 +68,9 @@ class DALClient(object):
 		res = json.loads(response)
 		code = res['code'];
 		if(code==200):
-			print "\tOK";
+			return "OK";
 		else:
-			print "Error " + str(code) + ": " + response
+			return "Error " + str(code) + ": " + response
 
 	@staticmethod
 	def request_property_read(dal_addr,devname,fcn,prop):
@@ -94,9 +94,9 @@ class DALClient(object):
 		code = res['code'];
 		if(code==200):
 			#print json.dumps(res['result'], sort_keys=True,indent=4, separators=(',', ': ')) #thanks https://docs.python.org/2/library/json.html
-			print json.dumps(res['result'])
+			return json.dumps(res['result'])
 		else:
-			print "Error " + str(code) + ": " + response
+			return "Error " + str(code) + ": " + response
 
 
 	@staticmethod
@@ -121,6 +121,6 @@ class DALClient(object):
 		res = json.loads(response)
 		code = res['code'];
 		if(code==200):
-			print "OK"
+			return "OK"
 		else:
-			print "Error " + str(code) + ": " + response
+			return "Error " + str(code) + ": " + response

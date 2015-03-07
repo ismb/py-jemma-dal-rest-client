@@ -58,8 +58,8 @@ General usage:
 Here some examples of script which work in my home setup (4 hues + 2 strips + 1 disco ball)
 
 ```
-python examples/random_disco.py
-python examples/rolling_red_light.py
+python random_disco.py
+python rolling_red_light.py
 
 ```
 

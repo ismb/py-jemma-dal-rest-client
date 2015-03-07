@@ -80,8 +80,8 @@ def main(argv):
 			print HELPTEXT
 			sys.exit()		
 		print "\nOperating function \""+fcn+"\" with op \""+op+"\" on device \""+dev+"\" for DAL " + dal_addr + "\n"
-		DALClient.request_operation(dal_addr,dev,fcn,op);
-		print "\n"
+		res = DALClient.request_operation(dal_addr,dev,fcn,op);
+		print res + "\n"
 	elif (cmd == 'read'):
 		if (dev == ''):
 			print "missing dev"
@@ -96,8 +96,8 @@ def main(argv):
 			print HELPTEXT
 			sys.exit()		
 		print "\nReading property \""+prop+"\" on function \""+fcn+"\" on device \""+dev+"\" for DAL " + dal_addr + "\n"
-		DALClient.request_property_read(dal_addr,dev,fcn,prop);
-		print "\n"
+		res = DALClient.request_property_read(dal_addr,dev,fcn,prop);
+		print res + "\n"
 	elif (cmd == 'write'):
 		if (dev == ''):
 			print "missing dev"
@@ -116,8 +116,8 @@ def main(argv):
 			print HELPTEXT
 			sys.exit()
 		print "\nWriting property \""+prop+"\" on function \""+fcn+"\" on device \""+dev+"\" for DAL " + dal_addr + " to value: "+value+"\n"
-		DALClient.request_property_write(dal_addr,dev,fcn,prop,value);
-		print "\n"		
+		res = DALClient.request_property_write(dal_addr,dev,fcn,prop,value);
+		print res + "\n"
 	else:
 		print "Unknown command: " + cmd
 		print HELPTEXT
