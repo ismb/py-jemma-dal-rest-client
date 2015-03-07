@@ -1,6 +1,7 @@
 import json
 import urlparse
 import httplib, urllib
+import re
 
 class DALClient(object):
 	
@@ -53,7 +54,7 @@ class DALClient(object):
 		DEV_NAME = urllib.quote_plus(devname)
 		FCN_NAME = urllib.quote_plus(fcn)
 		URL = "http://" + dal_addr + "/api/functions/" +DEV_NAME+":"+FCN_NAME
-		print URL
+		#print URL
 		OPERATION = op
 		HEADERS = {"Content-Type":"application/json"}
 		params = "{operation: '"+OPERATION+"'}"
@@ -71,4 +72,29 @@ class DALClient(object):
 		else:
 			print "Error " + str(code) + ": " + response
 
- 
+	@staticmethod
+	def request_property_read(dal_addr,devname,fcn,prop):
+		DEV_NAME = urllib.quote_plus(devname)
+		FCN_NAME = urllib.quote_plus(fcn)
+		URL = "http://" + dal_addr + "/api/functions/" +DEV_NAME+":"+FCN_NAME
+		#print URL
+		myprop= prop
+		myprop = re.sub('([a-zA-Z])', lambda x: x.groups()[0].upper(), myprop, 1) # thanks http://stackoverflow.com/questions/12410242/python-capitalize-first-letter-only
+		OPERATION = "get" + myprop
+		HEADERS = {"Content-Type":"application/json"}
+		params = "{operation: '"+OPERATION+"'}"
+		
+		domain = urlparse.urlparse(URL).netloc
+		connection = httplib.HTTPConnection(domain)
+		connection.request("POST", URL, params, HEADERS)
+		rawresponse = connection.getresponse()
+		# this is to de-serialize the json
+		response=rawresponse.read()
+		res = json.loads(response)
+		code = res['code'];
+		if(code==200):
+			print json.dumps(res['result'], sort_keys=True,indent=4, separators=(',', ': ')) #thanks https://docs.python.org/2/library/json.html
+		else:
+			print "Error " + str(code) + ": " + response
+
+

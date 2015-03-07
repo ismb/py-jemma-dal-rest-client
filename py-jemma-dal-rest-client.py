@@ -9,15 +9,18 @@ from DALClient import *
 
 def main(argv):
 	HELPTEXT = "\nUsage: ./py-jemma-dal-rest-client -d <address-of-DAL-endpoint> -c <command> ...\n"
+
+	# Based on example from http://www.tutorialspoint.com/python/python_command_line_arguments.htm
+
 	dal_addr = ''
 	cmd = ''
 	dev = ''
 	fcn= ''
 	op = ''
-	# Based on example from http://www.tutorialspoint.com/python/python_command_line_arguments.htm
+	prop=""
 	
 	try:
-		opts, args = getopt.getopt(argv,"ha:c:d:f:o:",["addr=","cmd=","help","dev=","fcn=","op="])
+		opts, args = getopt.getopt(argv,"ha:c:d:f:o:p:",["addr=","cmd=","help","dev=","fcn=","op=","prop="])
 	except getopt.GetoptError:
 		print HELPTEXT
 		sys.exit(2)
@@ -35,7 +38,9 @@ def main(argv):
 			fcn = arg			
 		elif opt in ("-o", "--op"):
 			op = arg			
-	
+		elif opt in ("-p", "--prop"):
+			prop = arg	
+						
 	if (dal_addr == ''):
 		print "missing address-of-DAL-endpoint"
 		print HELPTEXT
@@ -73,6 +78,22 @@ def main(argv):
 			sys.exit()		
 		print "\nOperating function \""+fcn+"\" with op \""+op+"\" on device \""+dev+"\" for DAL " + dal_addr + "\n"
 		DALClient.request_operation(dal_addr,dev,fcn,op);
+		print "\n"
+	elif (cmd == 'read'):
+		if (dev == ''):
+			print "missing dev"
+			print HELPTEXT
+			sys.exit()		
+		if (fcn == ''):
+			print "missing fcn"
+			print HELPTEXT
+			sys.exit()		
+		if (prop == ''):
+			print "missing prop"
+			print HELPTEXT
+			sys.exit()		
+		print "\nReading property \""+prop+"\" on function \""+fcn+"\" on device \""+dev+"\" for DAL " + dal_addr + "\n"
+		DALClient.request_property_read(dal_addr,dev,fcn,prop);
 		print "\n"
 	else:
 		print "Unknown command: " + cmd

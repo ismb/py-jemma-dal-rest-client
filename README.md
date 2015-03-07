@@ -28,6 +28,18 @@ General usage:
 ./py-jemma-dal-rest-client.py -a 127.0.0.1 -c operate -d "ZigBee:Meter Lamp:ah.app.5149012995480223-2" -f "OnOff" -o "reverse"
 ```
 
-
-
 ## Reading a property
+
+```
+./py-jemma-dal-rest-client.py -a 127.0.0.1 -c read -d "ZigBee:LEDStrip 6:ah.app.6623462354059559-11" -f "ColorControl" -p "HS"
+```
+
+## Writing a property
+
+
+## Other misc examples
+
+```
+./py-jemma-dal-rest-client.py -a 127.0.0.1 -c read -d "ZigBee:LEDStrip 6:ah.app.6623462354059559-11" -f "ColorControl" -p "HS"
+./py-jemma-dal-rest-client.py -a 127.0.0.1 -c read -d "ZigBee:LEDStrip 6:ah.app.6623462354059559-11" -f "MultiLevelControl" -p "data"
+```
