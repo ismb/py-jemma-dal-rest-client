@@ -18,9 +18,10 @@ def main(argv):
 	fcn= ''
 	op = ''
 	prop=""
+	value=""
 	
 	try:
-		opts, args = getopt.getopt(argv,"ha:c:d:f:o:p:",["addr=","cmd=","help","dev=","fcn=","op=","prop="])
+		opts, args = getopt.getopt(argv,"ha:c:d:f:o:p:v:",["addr=","cmd=","help","dev=","fcn=","op=","prop=","value="])
 	except getopt.GetoptError:
 		print HELPTEXT
 		sys.exit(2)
@@ -40,6 +41,8 @@ def main(argv):
 			op = arg			
 		elif opt in ("-p", "--prop"):
 			prop = arg	
+		elif opt in ("-v", "--value"):
+			value = arg	
 						
 	if (dal_addr == ''):
 		print "missing address-of-DAL-endpoint"
@@ -95,6 +98,26 @@ def main(argv):
 		print "\nReading property \""+prop+"\" on function \""+fcn+"\" on device \""+dev+"\" for DAL " + dal_addr + "\n"
 		DALClient.request_property_read(dal_addr,dev,fcn,prop);
 		print "\n"
+	elif (cmd == 'write'):
+		if (dev == ''):
+			print "missing dev"
+			print HELPTEXT
+			sys.exit()		
+		if (fcn == ''):
+			print "missing fcn"
+			print HELPTEXT
+			sys.exit()		
+		if (prop == ''):
+			print "missing prop"
+			print HELPTEXT
+			sys.exit()		
+		if (value == ''):
+			print "missing value"
+			print HELPTEXT
+			sys.exit()
+		print "\nWriting property \""+prop+"\" on function \""+fcn+"\" on device \""+dev+"\" for DAL " + dal_addr + " to value: "+value+"\n"
+		DALClient.request_property_write(dal_addr,dev,fcn,prop,value);
+		print "\n"		
 	else:
 		print "Unknown command: " + cmd
 		print HELPTEXT
