@@ -41,14 +41,25 @@ General usage:
 ./py-jemma-dal-rest-client.py -a 127.0.0.1 -c write -d "ZigBee:LEDStrip 6:ah.app.6623462354059559-11" -f "ColorControl" -p "data" -v '[{"type":"java.lang.Short","value":"168"},{"type":"java.lang.Short","value":"253"}]'
 ```
 
-## Other misc examples
+## Unsorted/misc examples
 
 ```
+./py-jemma-dal-rest-client.py -a 127.0.0.1 -c listd 
+./py-jemma-dal-rest-client.py -a 127.0.0.1 -c listf -d "ZigBee:Meter Lamp:ah.app.5149012995480223-2"
+./py-jemma-dal-rest-client.py -a 127.0.0.1 -c operate -d "ZigBee:Meter Lamp:ah.app.5149012995480223-2" -f "OnOff" -o "reverse"
 ./py-jemma-dal-rest-client.py -a 127.0.0.1 -d "ZigBee:LEDStrip 6:ah.app.6623462354059559-11" -f "ColorControl" -c read -p "HS"
 ./py-jemma-dal-rest-client.py -a 127.0.0.1 -d "ZigBee:LEDStrip 6:ah.app.6623462354059559-11" -f "MultiLevelControl" -c read -p "data"
 ./py-jemma-dal-rest-client.py -a 127.0.0.1 -d "ZigBee:Striscia 6:ah.app.6623462354059559-11" -f "MultiLevelControl" -c write  -p "data" -v '[{"type":"java.math.BigDecimal","value":"0"}]'
-./py-jemma-dal-rest-client.py -a rtsm-local-hag -c write -d "ZigBee:Striscia 6:ah.app.6623462354059559-11" -f "ColorControl" -p "HS" -v '[{"type":"java.lang.Short","value":"168"},{"type":"java.lang.Short","value":"253"}]'
+./py-jemma-dal-rest-client.py -a 127.0.0.1 -c write -d "ZigBee:Striscia 6:ah.app.6623462354059559-11" -f "ColorControl" -p "HS" -v '[{"type":"java.lang.Short","value":"168"},{"type":"java.lang.Short","value":"253"}]'
+```
 
+## Example Scripts
+
+Here some examples of script which work in my home setup (4 hues + 2 strips + 1 disco ball)
+
+```
+python examples/random_disco.py
+python examples/rolling_red_light.py
 
 ```
 
