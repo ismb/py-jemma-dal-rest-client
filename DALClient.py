@@ -25,7 +25,7 @@ class DALClient(object):
 	def request_functions_list(dal_addr,devname):
 		DEV_NAME = urllib.quote_plus(devname)
 		URL = "http://" + dal_addr + "/api/devices/" +DEV_NAME+"/functions"
-		print URL
+		#print URL
 		HEADERS = {"Content-Type":"application/json"}
 		domain = urlparse.urlparse(URL).netloc
 		connection = httplib.HTTPConnection(domain)
@@ -36,7 +36,9 @@ class DALClient(object):
 		print str(len(functionlist)) + " functions available:\n"
 		#printing device UIDs
 		for fcn in functionlist:
-			print fcn['dal.function.UID']
+			myfcn = fcn['dal.function.UID']
+			myfcn = myfcn.replace(devname + ":","");
+			print myfcn
 			ops = fcn['dal.function.operation.names']
 			props = fcn['dal.function.property.names']
 			if(len(ops)!=0):
@@ -46,4 +48,27 @@ class DALClient(object):
 			print "\n"
 
 
+	@staticmethod
+	def request_operation(dal_addr,devname,fcn,op):
+		DEV_NAME = urllib.quote_plus(devname)
+		FCN_NAME = urllib.quote_plus(fcn)
+		URL = "http://" + dal_addr + "/api/functions/" +DEV_NAME+":"+FCN_NAME
+		print URL
+		OPERATION = op
+		HEADERS = {"Content-Type":"application/json"}
+		params = "{operation: '"+OPERATION+"'}"
+		
+		domain = urlparse.urlparse(URL).netloc
+		connection = httplib.HTTPConnection(domain)
+		connection.request("POST", URL, params, HEADERS)
+		rawresponse = connection.getresponse()
+		# this is to de-serialize the json
+		response=rawresponse.read()
+		res = json.loads(response)
+		code = res['code'];
+		if(code==200):
+			print "\tOK";
+		else:
+			print "Error " + str(code) + ": " + response
 
+ 

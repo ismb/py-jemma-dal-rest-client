@@ -21,3 +21,13 @@ General usage:
 ```
 ./py-jemma-dal-rest-client.py -a 127.0.0.1 -c listf -d "ZigBee:Meter Lamp:ah.app.5149012995480223-2"
 ```
+
+## Performing operations
+
+```
+./py-jemma-dal-rest-client.py -a 127.0.0.1 -c operate -d "ZigBee:Meter Lamp:ah.app.5149012995480223-2" -f "OnOff" -o "reverse"
+```
+
+
+
+## Reading a property
