@@ -5,7 +5,7 @@
 # Made by: Riccardo <tomasi@ismb.it>
 
 import sys, getopt
-from DALClient import *
+from DALClient import DALClient
 
 def main(argv):
 	HELPTEXT = "\nUsage: ./py-jemma-dal-rest-client -d <address-of-DAL-endpoint> -c <command> ...\n"
@@ -19,6 +19,8 @@ def main(argv):
 	op = ''
 	prop=""
 	value=""
+	
+	mydal="";
 	
 	try:
 		opts, args = getopt.getopt(argv,"ha:c:d:f:o:p:v:",["addr=","cmd=","help","dev=","fcn=","op=","prop=","value="])
@@ -48,7 +50,10 @@ def main(argv):
 		print "missing address-of-DAL-endpoint"
 		print HELPTEXT
 		sys.exit()
-
+	else:
+		print "DAL endpoint: " + dal_addr
+		mydal = DALClient.DALClient(dal_addr);
+	
 	if (cmd == ''):
 		print "missing cmd"
 		print HELPTEXT
@@ -56,7 +61,7 @@ def main(argv):
 
 	if (cmd == 'listd'):
 		print "\nListing devices for DAL " + dal_addr + "\n"
-		DALClient.request_devices_list(dal_addr);
+		mydal.request_devices_list();
 		print "\n"
 	elif (cmd == 'listf'):
 		if (dev == ''):
@@ -64,7 +69,7 @@ def main(argv):
 			print HELPTEXT
 			sys.exit()		
 		print "\nListing functions for device \""+dev+"\" for DAL " + dal_addr + "\n"
-		DALClient.request_functions_list(dal_addr,dev);
+		mydal.request_functions_list(dev);
 		print "\n"
 	elif (cmd == 'operate'):
 		if (dev == ''):
@@ -80,7 +85,7 @@ def main(argv):
 			print HELPTEXT
 			sys.exit()		
 		print "\nOperating function \""+fcn+"\" with op \""+op+"\" on device \""+dev+"\" for DAL " + dal_addr + "\n"
-		res = DALClient.request_operation(dal_addr,dev,fcn,op);
+		res = mydal.request_operation(dev,fcn,op);
 		print res + "\n"
 	elif (cmd == 'read'):
 		if (dev == ''):
@@ -96,7 +101,7 @@ def main(argv):
 			print HELPTEXT
 			sys.exit()		
 		print "\nReading property \""+prop+"\" on function \""+fcn+"\" on device \""+dev+"\" for DAL " + dal_addr + "\n"
-		res = DALClient.request_property_read(dal_addr,dev,fcn,prop);
+		res = mydal.request_property_read(dev,fcn,prop);
 		print res + "\n"
 	elif (cmd == 'write'):
 		if (dev == ''):
@@ -116,7 +121,7 @@ def main(argv):
 			print HELPTEXT
 			sys.exit()
 		print "\nWriting property \""+prop+"\" on function \""+fcn+"\" on device \""+dev+"\" for DAL " + dal_addr + " to value: "+value+"\n"
-		res = DALClient.request_property_write(dal_addr,dev,fcn,prop,value);
+		res = mydal.request_property_write(dev,fcn,prop,value);
 		print res + "\n"
 	else:
 		print "Unknown command: " + cmd

@@ -5,9 +5,12 @@ import re
 
 class DALClient(object):
 	
-	@staticmethod
-	def request_devices_list(dal_addr):
-		URL = "http://" + dal_addr + "/api/devices"
+	def __init__(self,dal_addr):
+		self.dal_addr = dal_addr
+		
+	
+	def request_devices_list(self):
+		URL = "http://" + self.dal_addr + "/api/devices"
 		print URL
 		HEADERS = {"Content-Type":"application/json"}
 		domain = urlparse.urlparse(URL).netloc
@@ -22,10 +25,9 @@ class DALClient(object):
 			print dev['dal.device.UID']
 
 
-	@staticmethod
-	def request_functions_list(dal_addr,devname):
+	def request_functions_list(self,devname):
 		DEV_NAME = urllib.quote_plus(devname)
-		URL = "http://" + dal_addr + "/api/devices/" +DEV_NAME+"/functions"
+		URL = "http://" + self.dal_addr + "/api/devices/" +DEV_NAME+"/functions"
 		#print URL
 		HEADERS = {"Content-Type":"application/json"}
 		domain = urlparse.urlparse(URL).netloc
@@ -48,12 +50,10 @@ class DALClient(object):
 				print "\tproperties: " + ','.join(props) 		
 			print "\n"
 
-
-	@staticmethod
-	def request_operation(dal_addr,devname,fcn,op):
+	def request_operation(self,devname,fcn,op):
 		DEV_NAME = urllib.quote_plus(devname)
 		FCN_NAME = urllib.quote_plus(fcn)
-		URL = "http://" + dal_addr + "/api/functions/" +DEV_NAME+":"+FCN_NAME
+		URL = "http://" + self.dal_addr + "/api/functions/" +DEV_NAME+":"+FCN_NAME
 		#print URL
 		OPERATION = op
 		HEADERS = {"Content-Type":"application/json"}
@@ -72,11 +72,10 @@ class DALClient(object):
 		else:
 			return "Error " + str(code) + ": " + response
 
-	@staticmethod
-	def request_property_read(dal_addr,devname,fcn,prop):
+	def request_property_read(self,devname,fcn,prop):
 		DEV_NAME = urllib.quote_plus(devname)
 		FCN_NAME = urllib.quote_plus(fcn)
-		URL = "http://" + dal_addr + "/api/functions/" +DEV_NAME+":"+FCN_NAME
+		URL = "http://" + self.dal_addr + "/api/functions/" +DEV_NAME+":"+FCN_NAME
 		#print URL
 		myprop= prop
 		myprop = re.sub('([a-zA-Z])', lambda x: x.groups()[0].upper(), myprop, 1) # thanks http://stackoverflow.com/questions/12410242/python-capitalize-first-letter-only
@@ -99,11 +98,10 @@ class DALClient(object):
 			return "Error " + str(code) + ": " + response
 
 
-	@staticmethod
-	def request_property_write(dal_addr,devname,fcn,prop,value):
+	def request_property_write(self,devname,fcn,prop,value):
 		DEV_NAME = urllib.quote_plus(devname)
 		FCN_NAME = urllib.quote_plus(fcn)
-		URL = "http://" + dal_addr + "/api/functions/" +DEV_NAME+":"+FCN_NAME
+		URL = "http://" + self.dal_addr + "/api/functions/" +DEV_NAME+":"+FCN_NAME
 		#print URL
 		myprop= prop
 		myprop = re.sub('([a-zA-Z])', lambda x: x.groups()[0].upper(), myprop, 1) # thanks http://stackoverflow.com/questions/12410242/python-capitalize-first-letter-only
