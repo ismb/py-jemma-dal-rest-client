@@ -66,6 +66,8 @@ python example_random_disco.py
 
 ```
 
+An example using this library from an [Arduino YUN](http://www.arduino.cc/en/Main/ArduinoBoardYun?from=Products.ArduinoYUN) is the available in the YunButtonsExample folder.
+
 # Credits
 
 Developed by Riccardo Tomasi.
