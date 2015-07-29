@@ -11,7 +11,7 @@ class DALClient(object):
 	
 	def request_devices_list(self):
 		URL = "http://" + self.dal_addr + "/api/devices"
-		print "calling: ", URL
+		#print "calling: ", URL
 		HEADERS = {"Content-Type":"application/json"}
 		domain = urlparse.urlparse(URL).netloc
 		connection = httplib.HTTPConnection(domain)
@@ -21,9 +21,9 @@ class DALClient(object):
 		# this is to de-serialize the json
 		deviceslist = json.loads(raws)
 		code = deviceslist['code']
-		print "result: " + str(code)
+		#print "result: " + str(code)
 		deviceslist = deviceslist['result']
-		print str(len(deviceslist)) + " devices available:\n"
+		#print str(len(deviceslist)) + " devices available:\n"
 		#print deviceslist
 		#printing device UIDs
 		for dev in deviceslist:
@@ -33,7 +33,7 @@ class DALClient(object):
 	def request_functions_list(self,devname):
 		DEV_NAME = urllib.quote_plus(devname)
 		URL = "http://" + self.dal_addr + "/api/devices/" +DEV_NAME+"/functions"
-		print "calling: ", URL
+		#print "calling: ", URL
 		HEADERS = {"Content-Type":"application/json"}
 		domain = urlparse.urlparse(URL).netloc
 		connection = httplib.HTTPConnection(domain)
@@ -42,9 +42,9 @@ class DALClient(object):
 		# this is to de-serialize the json
 		functionlist = json.loads(rawresponse.read())
 		code = functionlist['code']
-		print "result: " + str(code)
+		#print "result: " + str(code)
 		functionlist = functionlist['result']
-		print str(len(functionlist)) + " functions available:\n"
+		#print str(len(functionlist)) + " functions available:\n"
 		#printing device UIDs
 		for fcn in functionlist:
 			myfcn = fcn['dal.function.UID']
@@ -62,7 +62,7 @@ class DALClient(object):
 		DEV_NAME = urllib.quote_plus(devname)
 		FCN_NAME = urllib.quote_plus(fcn)
 		URL = "http://" + self.dal_addr + "/api/functions/" +DEV_NAME+":"+FCN_NAME
-		print "calling: ", URL
+		#print "calling: ", URL
 		OPERATION = op
 		HEADERS = {"Content-Type":"application/json"}
 		params = "{operation: '"+OPERATION+"'}"
@@ -84,7 +84,7 @@ class DALClient(object):
 		DEV_NAME = urllib.quote_plus(devname)
 		FCN_NAME = urllib.quote_plus(fcn)
 		URL = "http://" + self.dal_addr + "/api/functions/" +DEV_NAME+":"+FCN_NAME
-		print "calling: ", URL
+		#print "calling: ", URL
 		myprop= prop
 		myprop = re.sub('([a-zA-Z])', lambda x: x.groups()[0].upper(), myprop, 1) # thanks http://stackoverflow.com/questions/12410242/python-capitalize-first-letter-only
 		OPERATION = "get" + myprop
@@ -110,7 +110,7 @@ class DALClient(object):
 		DEV_NAME = urllib.quote_plus(devname)
 		FCN_NAME = urllib.quote_plus(fcn)
 		URL = "http://" + self.dal_addr + "/api/functions/" +DEV_NAME+":"+FCN_NAME
-		print "calling: ", URL
+		#print "calling: ", URL
 		myprop= prop
 		myprop = re.sub('([a-zA-Z])', lambda x: x.groups()[0].upper(), myprop, 1) # thanks http://stackoverflow.com/questions/12410242/python-capitalize-first-letter-only
 		OPERATION = "set" + myprop
